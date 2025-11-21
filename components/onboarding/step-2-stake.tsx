@@ -63,7 +63,7 @@ export function Step2Stake({ value, onChange }: Step2StakeProps) {
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold mb-2">What's Your Stake?</h2>
         <p className="text-muted-foreground">
-          Choose how much you're willing to bet ({`$${50.toLocaleString()} - $${5000.toLocaleString()}`})
+          Choose how much you're willing to bet ({`$${(50).toLocaleString()} - $${(5000).toLocaleString()}`})
         </p>
       </div>
 
