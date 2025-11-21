@@ -91,7 +91,7 @@ export function Step2Stake({ value, onChange }: Step2StakeProps) {
                   )}
                   onClick={() => handlePresetSelect(amount)}
                 >
-                  ${amount.toLocaleString()}
+                  {`$${amount.toLocaleString()}`}
                 </Button>
               ))}
             </div>
