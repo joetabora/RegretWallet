@@ -11,7 +11,7 @@ const PLATFORM_FEE_PERCENTAGE = 0.2; // 20%
  */
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await currentUser();
@@ -19,7 +19,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const betId = params.id;
+    const { id: betId } = await params;
 
     // Get bet from Supabase with anti-charity info
     const { data: bet, error: betError } = await supabase

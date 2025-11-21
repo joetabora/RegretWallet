@@ -8,7 +8,7 @@ import { supabase } from "@/lib/supabase";
  */
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await currentUser();
@@ -16,7 +16,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const challengeId = params.id;
+    const { id: challengeId } = await params;
 
     // Get user from Supabase
     const { data: dbUser } = await supabase

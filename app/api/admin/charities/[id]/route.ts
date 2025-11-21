@@ -8,15 +8,16 @@ import { supabase } from "@/lib/supabase";
  */
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin();
+    const { id } = await params;
 
     const { data, error } = await supabase
       .from("charities")
       .select("*")
-      .eq("id", params.id)
+      .eq("id", id)
       .single();
 
     if (error || !data) {
@@ -45,10 +46,11 @@ export async function GET(
  */
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin();
+    const { id } = await params;
 
     const body = await request.json();
     const { name, description, stripe_account_id, website_url, logo_url, is_active } = body;
@@ -64,7 +66,7 @@ export async function PATCH(
     const { data, error } = await supabase
       .from("charities")
       .update(updateData)
-      .eq("id", params.id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -94,16 +96,17 @@ export async function PATCH(
  */
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin();
+    const { id } = await params;
 
     // Check if charity is used in any bets
     const { data: bets } = await supabase
       .from("bets")
       .select("id")
-      .eq("charity_id", params.id)
+      .eq("charity_id", id)
       .limit(1);
 
     if (bets && bets.length > 0) {
@@ -116,7 +119,7 @@ export async function DELETE(
     const { error } = await supabase
       .from("charities")
       .delete()
-      .eq("id", params.id);
+      .eq("id", id);
 
     if (error) {
       return NextResponse.json(

@@ -9,7 +9,7 @@ import { processBetSuccess } from "@/lib/stripe";
  */
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await currentUser();
@@ -17,7 +17,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const betId = params.id;
+    const { id: betId } = await params;
 
     // Get bet from Supabase
     const { data: bet, error: betError } = await supabase
