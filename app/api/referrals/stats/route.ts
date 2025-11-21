@@ -67,16 +67,19 @@ export async function GET() {
       .select("*", { count: "exact", head: true })
       .eq("referral_code", referral.referral_code);
 
+    // Get user IDs who used this referral code
+    const { data: referralUsers } = await supabase
+      .from("referral_usage")
+      .select("user_id")
+      .eq("referral_code", referral.referral_code);
+
+    const userIds = referralUsers?.map((ru) => ru.user_id) || [];
+
+    // Get bets count for users who used this referral
     const { count: bets } = await supabase
       .from("bets")
       .select("*", { count: "exact", head: true })
-      .in(
-        "user_id",
-        supabase
-          .from("referral_usage")
-          .select("user_id")
-          .eq("referral_code", referral.referral_code)
-      )
+      .in("user_id", userIds.length > 0 ? userIds : ["00000000-0000-0000-0000-000000000000"])
       .eq("is_draft", false);
 
     return NextResponse.json({
