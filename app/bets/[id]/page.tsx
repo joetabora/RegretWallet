@@ -30,13 +30,14 @@ async function getBet(id: string) {
   };
 }
 
-export default async function BetDetailsPage({ params }: { params: { id: string } }) {
+export default async function BetDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await currentUser();
   if (!user) {
     redirect("/sign-in");
   }
 
-  const bet = await getBet(params.id);
+  const { id } = await params;
+  const bet = await getBet(id);
 
   if (!bet) {
     return (
