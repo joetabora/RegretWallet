@@ -131,8 +131,8 @@ export async function POST(request: Request) {
             await supabase
               .from("bets")
               .update({
-                refund_id: charge.refunds.data[0]?.id || null,
-                refund_amount: charge.refunds.data[0]?.amount
+                refund_id: charge.refunds?.data?.[0]?.id || null,
+                refund_amount: charge.refunds?.data?.[0]?.amount
                   ? charge.refunds.data[0].amount / 100
                   : null,
                 status: "won",
