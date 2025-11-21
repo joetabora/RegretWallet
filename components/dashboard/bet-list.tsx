@@ -77,7 +77,7 @@ export function BetList({ bets, emptyMessage, emptyAction, className }: BetListP
                 <div className="flex flex-wrap gap-4 mt-3 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <DollarSign className="h-4 w-4" />
-                    <span>${bet.amount.toFixed(2)}</span>
+                    <span>{`$${bet.amount.toFixed(2)}`}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />

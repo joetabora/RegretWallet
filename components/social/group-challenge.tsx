@@ -274,7 +274,7 @@ export function GroupChallengeManager({ userId }: { userId: string }) {
                     </div>
                     <div className="flex items-center gap-2">
                       <DollarSign className="h-4 w-4 text-muted-foreground" />
-                      <span>${challenge.target_amount} target</span>
+                      <span>{`$${challenge.target_amount} target`}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-muted-foreground" />

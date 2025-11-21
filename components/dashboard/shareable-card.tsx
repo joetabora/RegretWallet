@@ -179,7 +179,7 @@ export function ShareableCard({ userName, stats, className }: ShareableCardProps
 
             <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4 mt-4">
               <p className="text-sm text-muted-foreground">Total Donated</p>
-              <p className="text-3xl font-bold text-purple-500">${stats.totalDonated.toFixed(2)}</p>
+              <p className="text-3xl font-bold text-purple-500">{`$${stats.totalDonated.toFixed(2)}`}</p>
             </div>
 
             <p className="text-xs text-muted-foreground mt-4">
